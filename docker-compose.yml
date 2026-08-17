@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./core:/app/core
+      - ./models.json:/app/models.json
+      - ./test_api.py:/app/test_api.py
+      - ./screenshots:/app/screenshots
+      - ./checkpoints:/app/checkpoints
+      - ./train_data:/app/train_data
+      - ./uploads:/app/uploads
+      - ./examples:/app/examples
+      - db_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/elasticity.db
+      - MODELS_JSON=/app/models.json
+      - CHECKPOINTS_DIR=/app/checkpoints
+      - TRAIN_DATA_DIR=/app/train_data
+      - UPLOADS_DIR=/app/uploads
+      - SCREENSHOTS_DIR=/app/screenshots
+      - DEVICE=cpu
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  db_data:

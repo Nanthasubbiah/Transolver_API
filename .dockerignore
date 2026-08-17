@@ -1,0 +1,6 @@
+checkpoints/
+train_data/
+__pycache__
+*.pyc
+.git
+elasticity.db

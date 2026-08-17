@@ -1,0 +1,66 @@
+[
+  {
+    "id": "linear_elastic_2d",
+    "file": "elas_disp_Transolver.pt",
+    "train_disp": "disp_xy.npy",
+    "material": "linear_elastic",
+    "mat_params": {"E": 1.0, "nu": 0.3},
+    "nodes": 972,
+    "topology": "Plate with circular hole (quarter symmetry)",
+    "domain": "Unit square [0,1]x[0,1] with hole at center",
+    "bc_description": "Symmetry: ux=0 at x=0.5, uy=0 at y=0.5. Traction: ±T on left/right edges, T=1.0",
+    "bc_details": {
+      "symmetry": [
+        {"axis": "x", "coord": 0.5},
+        {"axis": "y", "coord": 0.5}
+      ],
+      "outer_traction": {"traction": 1.0}
+    },
+    "screenshots": [
+      "screenshots/linear_elastic.png"
+    ],
+    "model_config": {
+      "n_layers": 3,
+      "n_hidden": 64,
+      "n_heads": 4,
+      "mlp_ratio": 1,
+      "slice_num": 32,
+      "ref": 8,
+      "unified_pos": 0,
+      "ntrain": 1800
+    },
+    "description": "2D plane stress, linear elastic, 972 nodes. Trained on FEM batch data (fem_batch.py). Warm start helps nonlinear solvers only."
+  },
+  {
+    "id": "hyperelastic_2d",
+    "file": "elas_hyper_disp_Transolver.pt",
+    "train_disp": "disp_hyper_xy.npy",
+    "material": "mooney_rivlin",
+    "mat_params": {"C1": 1.863e5, "C2": 9.79e3},
+    "nodes": 972,
+    "topology": "Plate with circular hole (quarter symmetry)",
+    "domain": "Unit square [0,1]x[0,1] with hole at center",
+    "bc_description": "Symmetry: ux=0 at x=0.5, uy=0 at y=0.5. Traction: ±T on left/right edges, T=1e4",
+    "bc_details": {
+      "symmetry": [
+        {"axis": "x", "coord": 0.5},
+        {"axis": "y", "coord": 0.5}
+      ],
+      "outer_traction": {"traction": 1e4}
+    },
+    "screenshots": [
+      "screenshots/hyper_elastic.png"
+    ],
+    "model_config": {
+      "n_layers": 3,
+      "n_hidden": 64,
+      "n_heads": 4,
+      "mlp_ratio": 1,
+      "slice_num": 32,
+      "ref": 8,
+      "unified_pos": 0,
+      "ntrain": 1800
+    },
+    "description": "2D Mooney-Rivlin hyperelastic, 972 nodes. Trained on FEM batch data (fem_batch_hyperelastic.py). Warm start reduces NR iterations."
+  }
+]
